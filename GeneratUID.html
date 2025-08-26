@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft UUID Generator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1f2d 0%, #131722 100%);
+            color: #e1e1e1;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #232832;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #3a4152;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            color: #4caf50;
+            text-shadow: 0 0 10px rgba(76, 175, 80, 0.4);
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 25px 0 15px;
+            color: #bbbbbb;
+            border-left: 5px solid #4caf50;
+            padding-left: 15px;
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 20px 0 12px;
+            color: #4caf50;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .uuid-explanation {
+            background: #2a303d;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .generator {
+            background: #2a303d;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .uuid-result {
+            background: #1e232e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            overflow-x: auto;
+            border: 1px solid #3a4152;
+            word-break: break-all;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background: #4caf50;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #3d8b40;
+            transform: translateY(-2px);
+        }
+        
+        .btn-copy {
+            background: #2196f3;
+        }
+        
+        .btn-copy:hover {
+            background: #0b7dda;
+        }
+        
+        .example {
+            background: #2a303d;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .code {
+            background: #1e232e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-family: monospace;
+            overflow-x: auto;
+            border: 1px solid #3a4152;
+        }
+        
+        .note {
+            background: #3c3c5c;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid #5555ff;
+        }
+        
+        .usage {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .usage-item {
+            flex: 1;
+            min-width: 300px;
+            background: #2a303d;
+            border-radius: 10px;
+            padding: 20px;
+        }
+        
+        .center {
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .usage {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-fingerprint"></i> Minecraft UUID Generator</h1>
+        <p class="center">Learn what UUIDs are and generate them for your Minecraft resource pack</p>
+        
+        <div class="uuid-explanation">
+            <h2>What is a UUID?</h2>
+            <p>A UUID (Universally Unique Identifier) is a 128-bit number used to uniquely identify information in computer systems.</p>
+            <p>In Minecraft, UUIDs are used to identify resource packs, behavior packs, and other components to ensure each one is unique.</p>
+            
+            <div class="note">
+                <p><strong>Why UUIDs are important:</strong> Minecraft uses UUIDs to distinguish between different resource packs. If two packs have the same UUID, Minecraft won't know which one to use.</p>
+            </div>
+            
+            <h3>UUID Format</h3>
+            <p>A standard UUID looks like this: <span style="font-family: monospace;">xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx</span></p>
+            <p>Where each 'x' is a hexadecimal digit (0-9, a-f).</p>
+        </div>
+        
+        <div class="generator">
+            <h2>Generate UUIDs for Your Resource Pack</h2>
+            <p>Click the button below to generate unique UUIDs for your Minecraft resource pack:</p>
+            
+            <button class="btn" onclick="generateUUID()"><i class="fas fa-plus"></i> Generate UUIDs</button>
+            
+            <div id="uuidResult">
+                <div class="uuid-result">
+                    <p><strong>Header UUID:</strong> <span id="headerUUID">Click generate to create UUIDs</span></p>
+                    <button class="btn btn-copy" onclick="copyToClipboard('headerUUID')"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+                
+                <div class="uuid-result">
+                    <p><strong>Module UUID:</strong> <span id="moduleUUID">Click generate to create UUIDs</span></p>
+                    <button class="btn btn-copy" onclick="copyToClipboard('moduleUUID')"><i class="fas fa-copy"></i> Copy</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h2>How to Use UUIDs in Your manifest.json</h2>
+            <p>Once you've generated your UUIDs, use them in your manifest.json file like this:</p>
+            
+            <div class="code">
+                {<br>
+                &nbsp;&nbsp;"format_version": 2,<br>
+                &nbsp;&nbsp;"header": {<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"description": "Your pack description",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"name": "Your pack name",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"uuid": "<span id="exampleHeaderUUID">22b87fae-158c-4663-aa29-a3d70acbf0b3</span>",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"version": [1, 0, 0],<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;"min_engine_version": [1, 16, 0]<br>
+                &nbsp;&nbsp;},<br>
+                &nbsp;&nbsp;"modules": [<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;{<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"description": "Your module description",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"type": "resources",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"uuid": "<span id="exampleModuleUUID">19c0aaaf-dfcb-4de9-9184-eb1ba17cd774</span>",<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"version": [1, 0, 0]<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                &nbsp;&nbsp;]<br>
+                }
+            </div>
+            
+            <div class="note">
+                <p><strong>Important:</strong> You need two different UUIDs - one for the header and one for the module. They must be different from each other!</p>
+            </div>
+        </div>
+        
+        <div class="usage">
+            <div class="usage-item">
+                <h3><i class="fas fa-lightbulb"></i> UUID Best Practices</h3>
+                <ul>
+                    <li>Generate new UUIDs for each resource pack you create</li>
+                    <li>Never reuse UUIDs from other packs</li>
+                    <li>Keep a record of which UUIDs you've used for which packs</li>
+                    <li>If you update your pack, keep the same UUIDs but change the version number</li>
+                </ul>
+            </div>
+            
+            <div class="usage-item">
+                <h3><i class="fas fa-exclamation-triangle"></i> Common Mistakes</h3>
+                <ul>
+                    <li>Using the same UUID for header and module</li>
+                    <li>Copying UUIDs from tutorial examples</li>
+                    <li>Not changing UUIDs when creating a new pack</li>
+                    <li>Using invalid UUID formats</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="note">
+            <h3><i class="fas fa-info-circle"></i> Online UUID Generators</h3>
+            <p>If you need more UUIDs or want to generate them using other tools, you can use these websites:</p>
+            <ul>
+                <li><a href="https://www.uuidgenerator.net/" style="color: #4caf50;">UUIDGenerator.net</a></li>
+                <li><a href="https://www.uuidtools.com/generate/v4" style="color: #4caf50;">UUIDTools.com</a></li>
+                <li><a href="https://onlinetools.com/uuid/generate-uuid" style="color: #4caf50;">OnlineUUIDTools.com</a></li>
+            </ul>
+            <p>Make sure to generate version 4 UUIDs (random UUIDs).</p>
+        </div>
+    </div>
+
+    <script>
+        function generateUUID() {
+            // Generate two random UUIDs
+            const headerUUID = generateRandomUUID();
+            const moduleUUID = generateRandomUUID();
+            
+            // Display the UUIDs
+            document.getElementById('headerUUID').textContent = headerUUID;
+            document.getElementById('moduleUUID').textContent = moduleUUID;
+            
+            // Update the example
+            document.getElementById('exampleHeaderUUID').textContent = headerUUID;
+            document.getElementById('exampleModuleUUID').textContent = moduleUUID;
+        }
+        
+        function generateRandomUUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                const r = Math.random() * 16 | 0;
+                const v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        
+        function copyToClipboard(elementId) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(function() {
+                alert('UUID copied to clipboard!');
+            }, function() {
+                alert('Failed to copy UUID');
+            });
+        }
+        
+        // Generate UUIDs when page loads
+        window.onload = generateUUID;
+    </script>
+</body>
+</html>
