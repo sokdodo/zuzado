@@ -1,6 +1,4 @@
 ## Hi there 👋
-This is Link Generate texture UID
-https://sokdodo.github.io/zuzado/
 
 <!--
 **zuzado/zuzado** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
